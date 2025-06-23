@@ -1,60 +1,49 @@
 #!/usr/bin/python3
-"""Defines a Square class with printing capability"""
+"""
+Add print method in class Square.
+"""
 
 
 class Square:
-    """Class that defines a square with size validation, area calculation, and printing"""
-    
+    """
+    Class that defines a square.
+    Attributes:
+        size(int): size of the square - private attribute.
+    """
+
     def __init__(self, size=0):
-        """Initialize the square with size
-        
-        Args:
-            size: size of the square (default 0)
-        """
-        self.size = size  # Uses the setter for validation
+        self.__size = size
+
+    def area(self):
+        """Public instance method that returns the current square area"""
+        return self.__size ** 2
+
+    def my_print(self):
+        """Public instance method that prints the square with character #"""
+        if self.__size == 0:
+            print()
+
+        i = 1
+        while i <= self.__size:
+            j = 1
+            while j <= self.__size:
+                print("#", end='')
+                j += 1
+            print()
+            i += 1
 
     @property
     def size(self):
-        """Getter for size property
-        
-        Returns:
-            The size of the square
-        """
+        """Property that retrieves size"""
         return self.__size
 
     @size.setter
     def size(self, value):
-        """Setter for size property with validation
-        
-        Args:
-            value: new size value
-            
-        Raises:
-            TypeError: If value is not an integer
-            ValueError: If value is less than 0
-        """
-        if not isinstance(value, int):
-            raise TypeError("size must be an integer")
-        if value < 0:
-            raise ValueError("size must be >= 0")
-        self.__size = value
-
-    def area(self):
-        """Calculate and return the current square area
-        
-        Returns:
-            The area of the square (size squared)
-        """
-        return self.__size ** 2
-
-    def my_print(self):
-        """Print the square with # characters
-        
-        Prints:
-            The square representation or empty line if size is 0
-        """
-        if self.__size == 0:
-            print()
+        """Property setter that sets the value of size"""
+        if isinstance(value, int):
+            if value < 0:
+                raise ValueError("size must be >= 0")
+            else:
+                self.__size = value
         else:
-            for _ in range(self.__size):
-                print("#" * self.__size)
+            raise TypeError("size must be an integer")
