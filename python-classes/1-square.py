@@ -1,14 +1,11 @@
 #!/usr/bin/python3
-"""Defines a Square class with private size attribute"""
+
+"""
+write a function that prints the first x elements of a list and only integers.
+"""
 
 
 class Square:
-    """Class that defines a square with private instance attribute size"""
-    
+    """Initialize a class with init"""
     def __init__(self, size):
-        """Initializes the square with a given size
-        
-        Args:
-            size: size of the square
-        """
         self.__size = size
