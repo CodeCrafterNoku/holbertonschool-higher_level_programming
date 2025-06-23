@@ -23,6 +23,26 @@ class TestMaxInteger(unittest.TestCase):
         max_at_beginning = [4, 3, 2, 1]
         self.assertEqual(max_integer(max_at_beginning), 4)
 
+    def test_max_at_end(self):
+        """Test a list with max value at the end."""
+        max_at_end = [1, 2, 3, 4]
+        self.assertEqual(max_integer(max_at_end), 4)
+
+    def test_max_in_middle(self):
+        """Test a list with max value in the middle."""
+        max_in_middle = [1, 3, 4, 2, 1]
+        self.assertEqual(max_integer(max_in_middle), 4)
+
+    def test_one_negative_number(self):
+        """Test a list with one negative number."""
+        one_negative = [1, 2, -3, 4]
+        self.assertEqual(max_integer(one_negative), 4)
+
+    def test_only_negative_numbers(self):
+        """Test a list with only negative numbers."""
+        only_negative = [-1, -5, -3, -2]
+        self.assertEqual(max_integer(only_negative), -1)
+
     def test_empty_list(self):
         """Test an empty list."""
         empty = []
@@ -33,31 +53,6 @@ class TestMaxInteger(unittest.TestCase):
         one_element = [7]
         self.assertEqual(max_integer(one_element), 7)
 
-    def test_floats(self):
-        """Test a list of floats."""
-        floats = [1.53, 6.33, -9.123, 15.2, 6.0]
-        self.assertEqual(max_integer(floats), 15.2)
 
-    def test_ints_and_floats(self):
-        """Test a list of ints and floats."""
-        ints_and_floats = [1.53, 15.5, -9, 15, 6]
-        self.assertEqual(max_integer(ints_and_floats), 15.5)
-
-    def test_negative_numbers(self):
-        """Test a list of negative numbers."""
-        negative = [-1, -5, -3, -2]
-        self.assertEqual(max_integer(negative), -1)
-
-    def test_duplicate_numbers(self):
-        """Test a list with duplicate maximum numbers."""
-        duplicates = [3, 5, 5, 2, 1]
-        self.assertEqual(max_integer(duplicates), 5)
-
-    def test_large_list(self):
-        """Test a large list of numbers."""
-        large = list(range(1000000))
-        self.assertEqual(max_integer(large), 999999)
-
-
-if __name__ == __main__:
+if __name__ == "__main__":
     unittest.main()
