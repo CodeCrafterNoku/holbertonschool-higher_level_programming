@@ -8,7 +8,7 @@ class Rectangle:
     """
     Rectangle class with private width and height attributes
     """
-    
+
     def __init__(self, width=0, height=0):
         """Initialize rectangle with optional width and height"""
         self.width = width
