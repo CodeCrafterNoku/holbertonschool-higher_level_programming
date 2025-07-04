@@ -1,3 +1,12 @@
+#!/usr/bin/python3
+"""
+A rectangle.
+"""
+
+
 class Rectangle:
-    """Empty class that defines a rectangle"""
+    """
+    Rectangle functions and data
+    """
+
     pass
