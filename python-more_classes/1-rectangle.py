@@ -1,27 +1,26 @@
 #!/usr/bin/python3
 """
-Rectangle class with width and height properties
+A rectangle with width and height.
 """
 
 
 class Rectangle:
     """
-    Rectangle class with private width and height attributes
+    Rectangle functions and data
     """
-    
+
     def __init__(self, width=0, height=0):
-        """Initialize rectangle with optional width and height"""
+        """ Instantiation
+        """
         self.width = width
         self.height = height
 
     @property
     def width(self):
-        """Retrieve width"""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """Set width with validation"""
         if not isinstance(value, int):
             raise TypeError("width must be an integer")
         if value < 0:
@@ -30,12 +29,10 @@ class Rectangle:
 
     @property
     def height(self):
-        """Retrieve height"""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """Set height with validation"""
         if not isinstance(value, int):
             raise TypeError("height must be an integer")
         if value < 0:
