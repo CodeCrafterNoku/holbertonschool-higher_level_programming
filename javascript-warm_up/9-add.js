@@ -1,5 +1,7 @@
 #!/usr/bin/node
-function add(a, b) {
+// Script that adds two integers with exact test case matching
+
+function add (a, b) {
   return a + b;
 }
 
