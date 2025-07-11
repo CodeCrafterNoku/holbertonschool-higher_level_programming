@@ -1,50 +1,49 @@
-"""
-basic flask app that serves a webpage
-"""
 from flask import Flask, render_template, request
-from read_file import read_csv, read_json
+import json
+import csv
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=os.path.abspath('templates'))
 
-@app.route('/')
-def home():
-   return render_template('index.html')
+def read_json_products():
+    try:
+        with open('products.json', 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
+def read_csv_products():
+    products = []
+    try:
+        with open('products.csv', 'r') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                row['id'] = int(row['id'])
+                row['price'] = float(row['price'])
+                products.append(row)
+        return products
+    except (FileNotFoundError, ValueError):
+        return []
 
 @app.route('/products')
-def products():
-    source = request.args.get('source')
+def show_products():
+    source = request.args.get('source', '').lower()
     product_id = request.args.get('id', type=int)
-
-    if source == "json":
-        if not product_id:
-            return render_template('product_display.html', products=read_json('products.json'))
-
-        product = read_json('products.json', product_id)
-        if product and not isinstance(product, str):
-            return render_template('product_display.html', products=product)
-
-        return render_template('product_display.html', error="Product not found")
     
-    elif source == "csv":
-        if not product_id:
-            return render_template('product_display.html', products=read_csv('products.csv'))
-        
-        product = read_csv('products.csv', product_id)
-        if product and not isinstance(product, str):
-            return render_template('product_display.html', products=product)
-
-        return render_template('product_display.html', error="Product not found")
-    
+    if source == 'json':
+        products = read_json_products()
+    elif source == 'csv':
+        products = read_csv_products()
     else:
         return render_template('product_display.html', error="Wrong source")
+    
+    if product_id:
+        filtered_products = [p for p in products if p['id'] == product_id]
+        if not filtered_products:
+            return render_template('product_display.html', error="Product not found")
+        products = filtered_products
+    
+    return render_template('product_display.html', products=products)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
