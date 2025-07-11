@@ -44,27 +44,39 @@ def get_products_from_csv():
 @app.route('/products')
 def display_products():
     source = request.args.get('source', 'json').lower()
-    
+    product_id = request.args.get('id')
+
     if source == 'json':
         try:
             with open('products.json', 'r') as file:
                 products = json.load(file)
         except (FileNotFoundError, json.JSONDecodeError):
             return render_template('product_display.html', error="Error loading JSON data")
-    
+
     elif source == 'csv':
         products = get_products_from_csv()
         if products is None:
             return render_template('product_display.html', error="Error loading CSV data")
-    
+
     elif source == 'sql':
         products = get_products_from_db()
         if products is None:
             return render_template('product_display.html', error="Error loading database data")
-    
+
     else:
         return render_template('product_display.html', error="Wrong source")
-    
+
+    if product_id:
+        try:
+            product_id = int(product_id)
+        except ValueError:
+            return render_template('product_display.html', error="Invalid ID format")
+
+        filtered = [p for p in products if p['id'] == product_id]
+        if not filtered:
+            return render_template('product_display.html', error="Product not found")
+        return render_template('product_display.html', products=filtered)
+
     return render_template('product_display.html', products=products)
 
 if __name__ == '__main__':
