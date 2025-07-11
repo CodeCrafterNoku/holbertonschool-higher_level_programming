@@ -1,42 +1,53 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
     <title>Product Display</title>
     <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .error { color: red; }
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    
-    <h1>Product Display</h1>
-    
     {% if error %}
-        <p class="error">{{ error }}</p>
+        <div class="error">{{ error }}</div>
     {% else %}
         <table>
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>Category</th>
                     <th>Price</th>
+                    <th>Category</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in products %}
-                <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>${{ "%.2f"|format(product.price) }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>${{ "%.2f"|format(product.price) }}</td>
+                        <td>{{ product.category }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
-    
-    {% include 'footer.html' %}
 </body>
 </html>
