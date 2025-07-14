@@ -11,6 +11,9 @@ if __name__ == "__main__":
     db_name = sys.argv[3]
     state_name = sys.argv[4]
 
+    # Escape single quotes in user input to prevent SQL injection (still using format)
+    safe_state_name = state_name.replace("'", "''")
+
     # Connect to MySQL
     db = MySQLdb.connect(
         host="localhost",
@@ -20,14 +23,14 @@ if __name__ == "__main__":
         db=db_name
     )
 
-    # Cursor to execute query
+    # Create cursor
     cursor = db.cursor()
 
-    # WARNING: using .format() as required by the task, not parameterized query
-    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(state_name)
+    # Format query as required, with escaped input
+    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(safe_state_name)
     cursor.execute(query)
 
-    # Fetch and print
+    # Display results
     for row in cursor.fetchall():
         print(row)
 
